@@ -40,7 +40,7 @@ exports.login = async(req,res,next)=>{
         if(user){
             const isMatch = await user.comparePassword(password);
 
-            if(isMatch===true){
+            if(isMatch==true){
                 let tokenData = {_id:user._id,username:user.username};
 
                 const token = await UserService.generateToken(tokenData,process.env.SECRETKEY,'1h');
