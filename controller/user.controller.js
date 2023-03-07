@@ -1,4 +1,5 @@
 const UserService = require('../services/user.services');
+require('dotenv').config();
 
 exports.register = async(req,res,next)=>{
     try{
@@ -10,7 +11,7 @@ exports.register = async(req,res,next)=>{
         if(!user && !emailcheck){
             const successRes = await UserService.registerUser(username,fullname,email,password);
             res.json({status:true,sucess:"User Registered Successfully"});
-            console.log("User Registered Successfully");
+            //console.log("User Registered Successfully");
         }else if(emailcheck){
             res.json({status:false,exist:"email",sucess:"User Not Registered"});
             //console.log("User Not Registered email");
@@ -31,20 +32,29 @@ exports.login = async(req,res,next)=>{
         const {username,password} = req.body;
 
         const user = await UserService.checkuser(username);
+        
 
         if(!user){
-            throw new Error('User Dont Exist');
+            user = await UserService.checkemail(username);
         }
-        const isMatch = await user.comparePassword(password);
+        if(user){
+            const isMatch = await user.comparePassword(password);
 
-        if(isMatch===false){
-            throw new Error('Password Invalid');
+            if(isMatch===true){
+                let tokenData = {_id:user._id,username:user.username};
+
+                const token = await UserService.generateToken(tokenData,process.env.SECRETKEY,'1h');
+
+                res.status(200).json({status:true,token:token});
+            }else{
+                res.status(200).json({status:false});
+            }          
+
+        }else{
+            res.status(200).json({status:false});
+
         }
-        let tokenData = {_id:user._id,username:user.username};
-
-        const token = await UserService.generateToken(tokenData,"secretKey",'1h');
-
-        res.status(200).json({status:true,token:token});
+        
 
     } catch (err){
 
