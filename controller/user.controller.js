@@ -4,9 +4,21 @@ exports.register = async(req,res,next)=>{
     try{
         const {username,fullname,email,password} = req.body;
 
-        const successRes = await UserService.registerUser(username,fullname,email,password);
+        const user = await UserService.checkuser(username);
+        const emailcheck = await UserService.checkemail(email);
 
-        res.json({status:true,sucess:"User Registered Successfully"})
+        if(!user && !emailcheck){
+            const successRes = await UserService.registerUser(username,fullname,email,password);
+            res.json({status:true,sucess:"User Registered Successfully"});
+            console.log("User Registered Successfully");
+        }else if(emailcheck){
+            res.json({status:false,exist:"email",sucess:"User Not Registered"});
+            //console.log("User Not Registered email");
+        }else if(user){
+            res.json({status:false,exist:"user",sucess:"User Not Registered"});
+            //console.log("User Not Registered username");
+
+        }   
 
     } catch (err){
 
