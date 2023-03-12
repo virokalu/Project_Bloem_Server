@@ -11,13 +11,13 @@ exports.register = async(req,res,next)=>{
 
         if(!user && !emailcheck){
             const successRes = await UserService.registerUser(username,fullname,email,password);
-            res.json({status:true,sucess:"User Registered Successfully"});
+            res.status(200).json({status:true,sucess:"User Registered Successfully"});
             //console.log("User Registered Successfully");
         }else if(emailcheck){
-            res.json({status:false,exist:"email",sucess:"User Not Registered"});
+            res.status(200).json({status:false,exist:"email",sucess:"User Not Registered"});
             //console.log("User Not Registered email");
         }else if(user){
-            res.json({status:false,exist:"user",sucess:"User Not Registered"});
+            res.status(200).json({status:false,exist:"user",sucess:"User Not Registered"});
             //console.log("User Not Registered username");
 
         }   
