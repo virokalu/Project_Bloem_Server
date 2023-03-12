@@ -1,4 +1,5 @@
 const UserService = require('../services/user.services');
+const UserModel = require('../model/user.model');
 require('dotenv').config();
 
 exports.register = async(req,res,next)=>{
@@ -28,37 +29,30 @@ exports.register = async(req,res,next)=>{
     }
 }
 exports.login = async(req,res,next)=>{
-    try{
-        const {username,password} = req.body;
-
+    
+        const { username, password } = req.body;
+    try {
         const user = await UserService.checkuser(username);
-        
-
-        if(!user){
-            user = await UserService.checkemail(username);
+        //console.log(user);
+        if (!user) {
+            return res.status(200).json({status:false});
         }
-        if(user){
-            const isMatch = await user.comparePassword(password);
+        const isMatch = await user.comparePassword(password);
 
             if(isMatch==true){
                 let tokenData = {_id:user._id,username:user.username};
 
                 const token = await UserService.generateToken(tokenData,process.env.SECRETKEY,'1h');
 
-                res.status(200).json({status:true,token:token});
+                res.status(200).json({status:true,token:token,username:user.username,fullname:user.fullname,email:user.email});
             }else{
                 res.status(200).json({status:false});
-            }          
-
-        }else{
-            res.status(200).json({status:false});
-
-        }
+            }     
         
+    } catch (error){
 
-    } catch (err){
-
-        throw err;
+        console.log(error);
+        return res.status(500).json({ message: 'Internal server error' });
 
     }
 }

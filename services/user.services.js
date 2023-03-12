@@ -25,10 +25,13 @@ class UserService{
             throw error;
         }
     }
+    
  
     static async generateToken(tokenData,secretKey,jwt_expire){
         return jwt.sign(tokenData,secretKey,{expiresIn:jwt_expire});
     }
+
+    
 
 }
 
