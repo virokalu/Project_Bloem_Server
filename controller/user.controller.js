@@ -56,3 +56,20 @@ exports.login = async(req,res,next)=>{
 
     }
 }
+
+//***********return all users in user collection 
+exports.showusers = async(req,res)=>{
+
+    const db = require("../config/db");
+    const collection = db.collection('users');
+    collection.find({}).toArray(function(err,users){
+        if(err){
+            console.log("failed to retrived users form mongoDB",err);
+        }
+        else{
+            //return res.status(200).json({users});
+            return users;
+        }
+    });
+}
+//*********************************************/////////////
