@@ -1,6 +1,8 @@
 const express = require('express');
 const body_parser =require('body-parser');
 const userRouter =require('./routers/user.router');
+const imgRouter =require('./routers/img.router');
+
 const cors = require("cors");
 var http = require('http');
 
@@ -37,6 +39,7 @@ server.listen(3001, "0.0.0.0", () => {
 
 app.use(body_parser.json());
 
-app.use('/',userRouter)
+app.use('/',userRouter);
+app.use('/profile',imgRouter)
 
 module.exports=app;
