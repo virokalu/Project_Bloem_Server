@@ -4,7 +4,7 @@ const ImgController = require('../controller/img.controller');
 
 
 router.post('/img',ImgController.addprofile);
-router.get('/img',ImgController.getprofile);
+router.post('/getimg',ImgController.getprofile);
 
 
 module.exports=router;
