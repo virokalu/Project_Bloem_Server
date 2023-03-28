@@ -1,4 +1,3 @@
-
 const mongoose =require('mongoose');
 const db = require('../config/db');
 
@@ -13,10 +12,10 @@ const imgSchema = new Schema({
         unique:true,
     },
     img:{
-        data:Buffer,
-        contentType:String
+        type:String,
+        required:true,
     }
 });
 
-const ImgModel = db.model('imgprofile',imgSchema);
+const ImgModel = db.model('img',imgSchema);
 module.exports = ImgModel;

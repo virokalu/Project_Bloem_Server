@@ -1,23 +1,24 @@
 
 
-const fs = require('fs');
-const { assert } = require('console');
-const ImgModel = require('../model/img.model');
 const ImgService = require('../services/img.services');
+const ImgModel = require("../model/img.model");
+
 
 exports.getprofile = async (req,res,next)=>{
     try {
-        const {username}=req.body;
+        const { username } = req.body;
         const image = await ImgService.checkimg(username);
-        console.log(image);
+        //console.log(image);
 
 
 
         if(!image){
-          
+            
             res.status(200).json({status:false,sucess:"No Image"});
         }else{
-            res.status(200).json({status:true,sucess:"Pick the Image"});
+
+            res.status(200).json({status:true,sucess:"Image",img:image.img});
+            //res.status(200).json({status:true,sucess:"Pick Image"});
             /// need to update the image
 
         }
@@ -34,22 +35,26 @@ exports.getprofile = async (req,res,next)=>{
 
 exports.addprofile = async (req,res,next)=>{
     try {
-
         
         const {username,img}=req.body;
         const image = await ImgService.checkimg(username);
-        console.log(image);
+        //console.log(image);
 
 
 
         if(!image){
-            ImgService.insertImg(username,{
-                data:fs.readFileSync("img.uploads/"+ req.file.filename),
-                contentType:"image/png",
-            })
+            const successRes = await ImgService.insertImg(username,img);
+            //await ImgService.insertImg(username,img);
             res.status(200).json({status:true,sucess:"Image Added Successfully"});
         }else{
-            res.status(200).json({status:false,sucess:"Already have a image"});
+            var item = {
+                username:username,
+                img:img
+
+            }
+
+            await ImgModel.updateOne({username: username},{$set:item});
+            res.status(200).json({status:true,sucess:"Update the image"});
             /// need to update the image
 
         }

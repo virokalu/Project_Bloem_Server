@@ -16,7 +16,7 @@ class ImgService{
         try {
             //console.log("run check");
 
-            return await ImgModel.findOne({username: username});
+            return await ImgModel.findOne({username});
         } catch (error) {
             throw error;
         }
