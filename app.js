@@ -2,6 +2,7 @@ const express = require('express');
 const body_parser =require('body-parser');
 const userRouter =require('./routers/user.router');
 const imgRouter =require('./routers/img.router');
+const itemRouter =require('./routers/item.router');
 
 const cors = require("cors");
 var http = require('http');
@@ -41,5 +42,6 @@ app.use(body_parser.json());
 
 app.use('/',userRouter);
 app.use('/profile',imgRouter)
+app.use('/item',itemRouter)
 
 module.exports=app;
