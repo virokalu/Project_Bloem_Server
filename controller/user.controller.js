@@ -67,8 +67,9 @@ exports.showusers = async(req,res)=>{
             console.log("failed to retrived users form mongoDB",err);
         }
         else{
-            //return res.status(200).json({users});
-            return users;
+            return res.status(200).json({users});
+            // console.log(users);
+            // return users;
         }
     });
 }
