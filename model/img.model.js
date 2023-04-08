@@ -7,7 +7,6 @@ const { Schema } = mongoose;
 const imgSchema = new Schema({
     username:{
         type : String,
-        lowercae:true,
         required:true,
         unique:true,
     },
