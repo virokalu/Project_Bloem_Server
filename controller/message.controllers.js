@@ -2,10 +2,11 @@ const Message = require('../model/message.model');
 
 exports.messages = async(req,res)=>{
     const message = new Message({
-        sender: req.body.sender,
-        reciver: req.body.reciver,
-        message: req.body.message,
-        timestamp: new Date()
+        type: req.body.type,
+        message : req.body.message,
+        sourceId: req.body.sourceId,
+        targetId: req.body.targetId,
+        key: req.body.key,
     })
 
     message.save((err) => {
@@ -17,5 +18,22 @@ exports.messages = async(req,res)=>{
           }
     });
     
+}
+
+exports.displaymessages = async(req,res)=> {
+  const db = require("../config/db");
+    const collection = db.collection('messages');
+    collection.find({}).toArray(function(err,messagesList){
+        if(err){
+            console.log("failed to retrived message data form mongoDB",err);
+        }
+        else{
+            // const users = chatlist.map(chat => chat.users).flat();
+            // const userChats = chatlist.filter(chat => chat.users.includes(req.body.user));
+            // const otherChats = chatlist.filter(chat => !chat.users.includes(req.body.user));
+            console.log(messagesList);
+            return res.status(200).json(messagesList);
+        }
+    });
 }
 
