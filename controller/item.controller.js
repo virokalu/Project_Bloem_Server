@@ -50,21 +50,21 @@ exports.addItem = async (req,res,next)=>{
         if(error){
             return next(error);
         }else{
-            return res.status(200).json({ status:true,message: 'Success' });
+            return res.status(200).json({ status:true,message: 'Success',data: results });
         }
     })
 
  }
  exports.findOne = (req,res,next)=>{
     var model = {
-        id: req.query.id,
+        id: req.params.id,
     };
 
     ItemService.getItemById(model,(error,results)=>{
         if(error){
             return next(error);
         }else{
-            return res.status(200).json({ status:true,message: 'Success' });
+            return res.status(200).json({ status:true,message: 'Success' ,data: results});
         }
     })
 
@@ -80,7 +80,7 @@ exports.update = async (req,res,next)=>{
         // const successRes = await ItemService.insertItem(username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus);
 
         var model ={
-            id:req.query.id,
+            id:req.params.id,
             username:req.body.username,
             category:req.body.category,
             commonname:req.body.commonname,
@@ -98,7 +98,7 @@ exports.update = async (req,res,next)=>{
             if(error){
                 return next(error);
             }else{
-                return res.status(200).json({ status:true,message: 'Item successfully added' });
+                return res.status(200).json({ status:true,message: 'Item successfully added'});
             }
         })
         
@@ -111,7 +111,7 @@ exports.update = async (req,res,next)=>{
 
 exports.delete = (req,res,next)=>{
     var model = {
-        id: req.query.id,
+        id: req.params.id,
     };
 
     ItemService.deleteItem(model,(error,results)=>{
