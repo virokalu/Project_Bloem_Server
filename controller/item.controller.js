@@ -43,12 +43,13 @@ exports.addItem = async (req,res,next)=>{
         commonname:req.query.commonname,
         category:req.query.category,
         pageSize:req.query.pageSize,
-        page:req.query.page
+        page:req.query.page,
+        sort:req.query.sort,
     };
 
     ItemService.getItem(model,(error,results)=>{
         if(error){
-            return next(error);
+            return res.status(200).json({ status:false});;
         }else{
             return res.status(200).json({ status:true,message: 'Success',data: results });
         }

@@ -42,7 +42,8 @@ async function getItem(params,callback){
     let page = (Math.abs(params.page) || 1) - 1;
 
     ItemModel
-    .find(condition,"id")
+    .find(condition)
+    .sort(params.sort)
     .limit(perPage)
     .skip(perPage * page)
     .then((response)=>{
