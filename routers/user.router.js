@@ -14,5 +14,6 @@ router.get('/barchartdata',BarchartController.showbarchartData);
 router.post('/insertbarchartdata',BarchartController.insertBarChartData);
 router.post('/chatlistdata',ChatListController.showchatlistData);
 router.post('/insertchatlistdata',ChatListController.insertchatlistData);
+router.post('/insertcard',UserController.addCard);
 
 module.exports=router;
