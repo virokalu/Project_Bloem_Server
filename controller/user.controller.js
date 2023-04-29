@@ -1,4 +1,5 @@
 const UserService = require('../services/user.services');
+const CardService = require('../services/card.service');
 const UserModel = require('../model/user.model');
 require('dotenv').config();
 
@@ -72,5 +73,33 @@ exports.showusers = async(req,res)=>{
             // return users;
         }
     });
+}
+
+exports.addCard = async (req,res,next)=>{
+    try {
+        //console.log(req);
+        // const {username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus}=req.body;
+        // const successRes = await ItemService.insertItem(username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus);
+
+        var model ={
+            cardholdername : req.body.cardholdername,
+            cardnumber : req.body.cardnumber,
+            date : req.body.date,
+            ccv : req.body.ccv,
+            username : req.body.username
+        };
+        CardService.insertCard(model,(error,results)=>{
+            if(error){
+                return next(error);
+            }else{
+                return res.status(200).json({ status:true,message: 'Card details successfully added' });
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ status:false,message: 'Internal server error' });
+        
+    }
 }
 //*********************************************/////////////

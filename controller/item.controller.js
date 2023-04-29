@@ -126,3 +126,31 @@ exports.delete = (req,res,next)=>{
     })
 
  }
+
+ exports.regBuyItem = async (req,res,next)=>{
+    try {
+        //console.log(req);
+        // const {username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus}=req.body;
+        // const successRes = await ItemService.insertItem(username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus);
+
+        var model ={
+            street : req.body.street,
+            town : req.body.town,
+            postalCode : req.body.postalCode,
+            username : req.body.username,
+            id : req.body.id,
+        };
+        ItemService.insertBuyItem(model,(error,results)=>{
+            if(error){
+                return next(error);
+            }else{
+                return res.status(200).json({ status:true,message: 'Item successfully added' });
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ status:false,message: 'Internal server error' });
+        
+    }
+}

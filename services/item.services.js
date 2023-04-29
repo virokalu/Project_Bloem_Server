@@ -1,4 +1,5 @@
 const ItemModel = require("../model/item.model");
+const regBuyItemModel = require("../model/reg.item.model");
 
 
 // class ItemService{
@@ -16,6 +17,17 @@ const ItemModel = require("../model/item.model");
 async function insertItem(params,callbacks){
     const Item = new ItemModel(params);
     Item.save()
+    .then((response)=>{
+        return callbacks(null,response);
+    })
+    .catch((error)=>{
+        return callbacks(error);
+    })
+}
+
+async function insertBuyItem(params,callbacks){
+    const buyItem = new regBuyItemModel(params);
+    buyItem.save()
     .then((response)=>{
         return callbacks(null,response);
     })
@@ -111,5 +123,6 @@ module.exports = {
     getItem,
     updateItem,
     deleteItem,
-    getItemById
+    getItemById,
+    insertBuyItem,
 };
