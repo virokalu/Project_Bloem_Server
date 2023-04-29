@@ -27,6 +27,8 @@ async function insertItem(params,callbacks){
 async function getItem(params,callback){
     const commonname = params.commonname;
     const category = params.category;
+    const username = params.username;
+    const activestatus = params.activestatus;
     var condition ={};
 
     if(commonname){
@@ -37,6 +39,12 @@ async function getItem(params,callback){
 
     if(category){
         condition["category"] = category;
+    }
+    if(username){
+        condition["username"] = username;
+    }
+    if(activestatus){
+        condition["activestatus"] = activestatus;
     }
     let perPage = Math.abs(params.pageSize);
     let page = (Math.abs(params.page) || 1) - 1;
