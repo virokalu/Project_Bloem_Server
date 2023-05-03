@@ -14,7 +14,7 @@ exports.showchatlistData = async(req,res)=>{
             const users = chatlist.map(chat => chat.users).flat();
             const userChats = chatlist.filter(chat => chat.users.includes(req.body.user));
             const otherChats = chatlist.filter(chat => !chat.users.includes(req.body.user));
-            console.log(userChats);
+            //console.log(userChats);
             return res.status(200).json(userChats);
         }
     });

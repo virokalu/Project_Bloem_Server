@@ -6,9 +6,9 @@ const { Schema } = mongoose;
 const messageSchema = new Schema({
     type : {type: String},
     message : {type: String},
-    sourceId : {type: String},
-    targetId : {type: String},
-    key : {type: String},
+    sourceName : {type: String},
+    targetName : {type: String},
+    time : {type : String}
 });
 
 const Message = db.model('messages',messageSchema);

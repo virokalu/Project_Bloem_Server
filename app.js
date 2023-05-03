@@ -19,17 +19,17 @@ app.use(cors());
 io.on("connection",(socket) => {
     console.log("connected");
     console.log(socket.id," has joined");
-    socket.on("passId", (id) => {
-        console.log(id);
-        clients[id] = socket;
-        console.log(clients);
+    socket.on("passId", (name) => {
+        console.log(name);
+        clients[name] = socket;
+        //console.log(clients);
     });
     socket.on("message", (msg) => {
         console.log(msg);
-        let targetId = msg.targetId;
-        if(clients[targetId]) {
+        let targetName = msg.targetName;
+        if(clients[targetName]) {
             console.log("Emiting message")
-            clients[targetId].emit("message",msg);
+            clients[targetName].emit("message",msg);
         }
     })
 });
