@@ -40,6 +40,8 @@ exports.addItem = async (req,res,next)=>{
 
  exports.findAll = (req,res,next)=>{
     var model = {
+        username:req.query.username,
+        activestatus:req.query.activestatus,
         commonname:req.query.commonname,
         category:req.query.category,
         pageSize:req.query.pageSize,
@@ -49,7 +51,7 @@ exports.addItem = async (req,res,next)=>{
 
     ItemService.getItem(model,(error,results)=>{
         if(error){
-            return res.status(200).json({ status:false});;
+            return res.status(300).json({ status:false});;
         }else{
             return res.status(200).json({ status:true,message: 'Success',data: results });
         }
