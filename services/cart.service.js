@@ -1,8 +1,8 @@
-const { response } = require("express");
-const { cart } = require("../model/cart.model");
+const cart  = require("../model/cart.model");
 var async = require("async");
 
 async function addCart(params,callback){
+    
     if(!params.username){
         return callback({
             message:"Username Required"
@@ -80,14 +80,14 @@ async function removeCartItem(params,callback){
         if(err){return callback(err);}
         else{
             if(params.id && params.qty){
-                const id = params.id;
+                const itemid = params.id;
                 const qty = params.qty;
 
                 if(cartDB.items.length === 0){
                     return callback(null,"Cart empty!");
 
                 }else{
-                    let itemIndex = cartDB.items.findIndex(p=>p.item==id);
+                    let itemIndex = cartDB.items.findIndex(p=>p.item==itemid);
 
                     if(itemIndex === -1){
                         return callback(null, "Invalid Product!");
@@ -117,5 +117,5 @@ async function removeCartItem(params,callback){
 module.exports = {
     addCart,
     getCart,
-    removeCartItem
+    removeCartItem,
 }
