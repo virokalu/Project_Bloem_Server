@@ -1,4 +1,4 @@
-const cartService = require("../services/card.service");
+const cartService = require("../services/cart.service");
 
 exports.create = (req,res,next)=>{
     var model = {
