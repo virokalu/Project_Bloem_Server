@@ -12,7 +12,7 @@ router.delete('/:id',ItemController.delete);
 router.post('/regbuyitem',ItemController.regBuyItem);
 
 router.post("/cart",cartController.create);
-router.get("/cart",cartController.create);
-router.delete("/cart",cartController.create);
+router.get("/cart/:username",cartController.findAll);
+router.delete("/cart",cartController.delete);
 
 module.exports=router;

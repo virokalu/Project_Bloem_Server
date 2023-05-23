@@ -18,7 +18,7 @@ exports.create = (req,res,next)=>{
 }
 
 exports.findAll = (req,res,next)=>{
-    cartService.addCart({username: req.body.username},(error,results)=>{
+    cartService.getCart({username: req.params.username},(error,results)=>{
         if(error){
             return next(error);
         }

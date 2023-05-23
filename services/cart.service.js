@@ -64,7 +64,7 @@ async function getCart(params,callback){
         populate: {
             path: 'item',
             model: 'item',
-            select: 'commonname price imgone category'
+            //select: 'commonname price imgone category'
         }
     })
     .then((response)=>{
