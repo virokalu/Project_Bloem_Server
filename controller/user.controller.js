@@ -45,7 +45,7 @@ exports.login = async(req,res,next)=>{
 
                 const token = await UserService.generateToken(tokenData,process.env.SECRETKEY,'1h');
 
-                res.status(200).json({status:true,token:token,username:user.username,fullname:user.fullname,email:user.email});
+                res.status(200).json({status:true,token:token,username:user.username,fullname:user.fullname,email:user.email,sellerStates:user.sellerStates});
             }else{
                 res.status(200).json({status:false});
             }     

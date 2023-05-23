@@ -26,6 +26,10 @@ const userSchema = new Schema({
     password:{
         type:String,
         required:true
+    },
+    sellerStates : {
+        type : Boolean,
+        default : false,
     }
 });
 
