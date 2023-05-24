@@ -32,9 +32,10 @@ exports.findAll = (req,res,next)=>{
 exports.delete = (req,res,next)=>{
     var model = {
         username: req.body.username,
-        items: req.body.items,
-        qty: req.body.qty
+        id: req.body.item,
+        qty: req.body.qty,
     };
+    console.log(model);
 
     cartService.removeCartItem(model,(error,results)=>{
         if(error){
