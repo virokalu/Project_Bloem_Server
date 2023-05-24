@@ -80,14 +80,14 @@ async function removeCartItem(params,callback){
         if(err){return callback(err);}
         else{
             if(params.id && params.qty){
-                const itemid = params.id;
+                const id = params.id;
                 const qty = params.qty;
 
                 if(cartDB.items.length === 0){
                     return callback(null,"Cart empty!");
 
                 }else{
-                    let itemIndex = cartDB.items.findIndex(p=>p.item==itemid);
+                    let itemIndex = cartDB.items.findIndex(p=>p.item==id);
 
                     if(itemIndex === -1){
                         return callback(null, "Invalid Product!");
