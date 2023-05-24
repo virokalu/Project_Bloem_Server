@@ -77,13 +77,16 @@ async function getCart(params,callback){
 
 async function removeCartItem(params,callback){
     cart.findOne({username: params.username}, function(err,cartDB){
-        if(err){return callback(err);}
+        if(err){
+            console.log(err);
+            return callback(err);
+        }
         else{
             if(params.id && params.qty){
                 const id = params.id;
                 const qty = params.qty;
 
-                if(cartDB.items.length === 0){
+                if(cartDB.items.length == 0){
                     return callback(null,"Cart empty!");
 
                 }else{

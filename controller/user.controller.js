@@ -58,6 +58,25 @@ exports.login = async(req,res,next)=>{
     }
 }
 
+exports.emailcheck = async(req,res,next)=>{
+    try{
+        const {email} = req.body;
+
+        const emailcheck = await UserService.checkemail(email);
+
+        if(emailcheck){
+            res.status(200).json({status:true,success:"Valid Email"});
+            //console.log("User Registered Successfully");
+        }else if(emailcheck){
+            res.status(200).json({status:false,success:"No Email"});
+            //console.log("User Not Registered email");
+        }
+    } catch (err){
+
+        throw err;
+
+    }
+}
 //***********return all users in user collection 
 exports.showusers = async(req,res)=>{
 
