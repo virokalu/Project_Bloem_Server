@@ -35,6 +35,28 @@ async function insertBuyItem(params,callbacks){
         return callbacks(error);
     })
 }
+async function getSearch(params,callback){
+    const commonname = params.commonname;
+    const activestatus = params.activestatus;
+    var condition ={};
+
+    if(commonname){
+        condition["commonname"] = {
+            $regex: new RegExp(commonname), $options:"i"
+        };
+    }
+
+    ItemModel
+    .find(condition)
+    .then((response)=>{
+        return callback(null,response);
+    })
+    .catch((error)=>{
+        return callback(error);
+    })
+
+}
+
 
 async function getItem(params,callback){
     const commonname = params.commonname;
@@ -125,4 +147,5 @@ module.exports = {
     deleteItem,
     getItemById,
     insertBuyItem,
+    getSearch,
 };
