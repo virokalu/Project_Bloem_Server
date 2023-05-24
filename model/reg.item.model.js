@@ -18,13 +18,20 @@ const regBuyItemSchema = new Schema({
         type : String,
         required : true,
     },
-    username:{
+    sellername:{
         type : String,
         required:true,
     },
-    id : {
+    buyername: {
         type : String,
         required : true,
+    },
+    itemid : {
+        type : String,
+        required : true,
+    },
+    itemprice : {
+        type : String,
     }
 
 }
