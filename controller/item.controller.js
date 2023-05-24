@@ -137,8 +137,10 @@ exports.delete = (req,res,next)=>{
             street : req.body.street,
             town : req.body.town,
             postalCode : req.body.postalCode,
-            username : req.body.username,
-            id : req.body.id,
+            sellername : req.body.sellername,
+            buyername : req.body.buyername,
+            itemid : req.body.itemid,
+            itemprice : req.body.itemprice
         };
         ItemService.insertBuyItem(model,(error,results)=>{
             if(error){
