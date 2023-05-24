@@ -58,6 +58,23 @@ exports.addItem = async (req,res,next)=>{
     })
 
  }
+
+ exports.findSearch = (req,res,next)=>{
+    var model = {
+        activestatus:req.query.activestatus,
+        commonname:req.query.commonname,
+    };
+
+    ItemService.getSearch(model,(error,results)=>{
+        if(error){
+            return res.status(300).json({ status:false});;
+        }else{
+            return res.status(200).json({ status:true,message: 'Success',data: results });
+        }
+    })
+
+ }
+
  exports.findOne = (req,res,next)=>{
     var model = {
         id: req.params.id,
