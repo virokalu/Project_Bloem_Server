@@ -6,6 +6,13 @@ const SellerController = require('../controller/selllerdetails.controller');
 
 const router = require('express').Router();
 
+const QuestionController = require('../controller/question.controller');
+
+
+router.post('/question',QuestionController.addQuestion);
+router.get('/question',QuestionController.findQuestion);
+router.put("/question",QuestionController.updateQuestion);
+
 router.post('/registration',UserController.register);
 router.post('/login',UserController.login);
 router.post('/email',UserController.emailcheck); //CheckEmailForVerification
