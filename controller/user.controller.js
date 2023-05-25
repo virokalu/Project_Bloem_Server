@@ -7,7 +7,7 @@ require('dotenv').config();
 
 exports.register = async(req,res,next)=>{
     try{
-        const {username,fullname,email,district,password} = req.body;
+        const {username,fullname,email,password,district,} = req.body;
 
         const user = await UserService.checkuser(username);
         const emailcheck = await UserService.checkemail(email);
