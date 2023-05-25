@@ -9,6 +9,11 @@ const router = require('express').Router();
 router.post('/registration',UserController.register);
 router.post('/login',UserController.login);
 router.post('/email',UserController.emailcheck); //CheckEmailForVerification
+router.post('/password',UserController.updatepassword); //ResetYourPassword
+router.post('/update',UserController.update); //ResetYourInfo
+router.post('/resetpassword',UserController.resetpassword); //ResetYourPasswordInForget
+
+
 router.get('/users',UserController.showusers);
 router.post('/message',MessageController.messages);//message routes
 router.post('/viewmessages',MessageController.displaymessages);

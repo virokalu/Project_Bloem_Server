@@ -1,17 +1,19 @@
 const UserService = require('../services/user.services');
 const CardService = require('../services/card.service');
 const UserModel = require('../model/user.model');
+const bcrypt = require('bcrypt');
+                                                                                                    
 require('dotenv').config();
 
 exports.register = async(req,res,next)=>{
     try{
-        const {username,fullname,email,password} = req.body;
+        const {username,fullname,email,district,password} = req.body;
 
         const user = await UserService.checkuser(username);
         const emailcheck = await UserService.checkemail(email);
 
         if(!user && !emailcheck){
-            const successRes = await UserService.registerUser(username,fullname,email,password);
+            const successRes = await UserService.registerUser(username,fullname,email,district,password);
             res.status(200).json({status:true,sucess:"User Registered Successfully"});
             //console.log("User Registered Successfully");
         }else if(emailcheck){
@@ -45,7 +47,7 @@ exports.login = async(req,res,next)=>{
 
                 const token = await UserService.generateToken(tokenData,process.env.SECRETKEY,'1h');
 
-                res.status(200).json({status:true,token:token,username:user.username,fullname:user.fullname,email:user.email,sellerStates:user.sellerStates});
+                res.status(200).json({status:true,token:token,username:user.username,fullname:user.fullname,email:user.email,district:user.district,sellerStates:user.sellerStates});
             }else{
                 res.status(200).json({status:false});
             }     
@@ -57,6 +59,52 @@ exports.login = async(req,res,next)=>{
 
     }
 }
+exports.update = async(req,res,next)=>{
+    try{
+        const {username,newusername,email,fullname,district} = req.body;
+
+        const user = await UserService.checkuser(username);
+
+        userCheck=null;
+        emailcheck=null;
+        if(username!=newusername){
+            userCheck = await UserService.checkuser(newusername);
+        }
+        if(user.email!=email){
+            emailcheck = await UserService.checkemail(email);
+        }
+
+        if(!userCheck && !emailcheck){
+            UserModel.findOneAndUpdate(
+                {username: username},
+                {$set:{username: newusername,email:email,fullname:fullname,district:district}},
+                {new:true},
+                (err, data) => {
+                    if (err) {
+                      res.status(500).send(err.message);
+                    } 
+                }
+            )
+            const newuser = await UserService.checkuser(newusername);
+
+            res.status(200).json({status:true,username:newuser.username,fullname:newuser.fullname,email:newuser.email,sucess:"User Registered Successfully"});
+
+            //console.log("User Registered Successfully");
+        }else if(emailcheck){
+            res.status(200).json({status:false,exist:"email",sucess:"User Not Registered"});
+            //console.log("User Not Registered email");
+        }else if(userCheck){
+            res.status(200).json({status:false,exist:"user",sucess:"User Not Registered"});
+            //console.log("User Not Registered username");
+
+        }   
+
+    } catch (err){
+
+        throw err;
+
+    }
+}
 
 exports.emailcheck = async(req,res,next)=>{
     try{
@@ -65,9 +113,9 @@ exports.emailcheck = async(req,res,next)=>{
         const emailcheck = await UserService.checkemail(email);
 
         if(emailcheck){
-            res.status(200).json({status:true,success:"Valid Email"});
+            res.status(200).json({status:true,username:emailcheck.username,success:"Valid Email"});
             //console.log("User Registered Successfully");
-        }else if(emailcheck){
+        }else if(!emailcheck){
             res.status(200).json({status:false,success:"No Email"});
             //console.log("User Not Registered email");
         }
@@ -77,6 +125,94 @@ exports.emailcheck = async(req,res,next)=>{
 
     }
 }
+
+exports.updatepassword = async(req,res) => {
+    
+    let username = req.body.username;
+    let oldpassword = req.body.oldpassword;
+    let newpassword = req.body.newpassword;
+
+    try{
+
+        const user = await UserService.checkuser(username);
+        const isMatch = await user.comparePassword(oldpassword);
+
+            if(isMatch==true){
+                const salt = await(bcrypt.genSalt(10));
+                const hashpass =await bcrypt.hash(newpassword,salt);
+
+                UserModel.findOneAndUpdate(
+                    {username: username},
+                    {$set:{password : hashpass}},
+                    {new:true},
+                    (err, data) => {
+                        if (err) {
+                          res.status(500).send(err.message);
+                        } else if (!data) {
+                          res.send('User not found');
+                        } else {
+                            res.status(200).json({status:true});
+                        }
+                    }
+                )
+            }else{
+                res.status(200).json({status:false});
+            }     
+        
+
+    }catch(err){
+        throw err;
+    }
+}
+
+
+
+exports.resetpassword = async(req,res) => {
+    
+    let username = req.body.username;
+    let newpassword = req.body.newpassword;
+
+    try{
+
+        //const user = await UserService.checkuser(username);
+        //const isMatch = await user.comparePassword(oldpassword);
+
+            //if(isMatch==true){
+                const salt = await(bcrypt.genSalt(10));
+                const hashpass =await bcrypt.hash(newpassword,salt);
+
+                UserModel.findOneAndUpdate(
+                    {username: username},
+                    {$set:{password : hashpass}},
+                    {new:true},
+                    (err, data) => {
+                        if (err) {
+
+                            res.status(500).send(err.message);
+
+                        } else if (!data) {
+
+                            res.send('User not found');
+
+                        } else {
+
+                            res.status(200).json({status:true});
+                        }
+                    }
+                )
+            // }else{
+            //     res.status(200).json({status:false});
+            // }     
+        
+
+    }catch(err){
+
+        throw err;
+    }
+}
+
+
+
 //***********return all users in user collection 
 exports.showusers = async(req,res)=>{
 

@@ -44,6 +44,7 @@ async function getSearch(params,callback){
         condition["commonname"] = {
             $regex: new RegExp(commonname), $options:"i"
         };
+        condition["activeStatus"] = activestatus;
     }
 
     ItemModel
