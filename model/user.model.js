@@ -25,9 +25,7 @@ const userSchema = new Schema({
     },
     district:{
         type : String,
-        lowercae:true,
         required:true,
-        unique:true,
     },
     password:{
         type:String,
