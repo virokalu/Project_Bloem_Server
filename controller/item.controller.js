@@ -21,6 +21,7 @@ exports.addItem = async (req,res,next)=>{
             imgone:req.body.imgone,
             imgtwo:req.body.imgtwo,
             imgthree:req.body.imgthree,
+            district:req.body.district,
             activestatus:req.body.activestatus
         }
         ItemService.insertItem(model,(error,results)=>{
@@ -43,6 +44,7 @@ exports.addItem = async (req,res,next)=>{
         username:req.query.username,
         activestatus:req.query.activestatus,
         commonname:req.query.commonname,
+        district:req.query.district,
         category:req.query.category,
         pageSize:req.query.pageSize,
         page:req.query.page,
@@ -112,6 +114,7 @@ exports.update = async (req,res,next)=>{
             imgone:req.body.imgone,
             imgtwo:req.body.imgtwo,
             imgthree:req.body.imgthree,
+            district:req.body.district,
             activestatus:req.body.activestatus
         }
         ItemService.updateItem(model,(error,results)=>{

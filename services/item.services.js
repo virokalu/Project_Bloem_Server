@@ -63,6 +63,7 @@ async function getItem(params,callback){
     const commonname = params.commonname;
     const category = params.category;
     const username = params.username;
+    const district = params.district;
     const activestatus = params.activestatus;
     var condition ={};
 
@@ -70,6 +71,9 @@ async function getItem(params,callback){
         condition["commonname"] = {
             $regex: new RegExp(commonname), $options:"i"
         };
+    }
+    if(district){
+        condition["district"] = district;
     }
 
     if(category){

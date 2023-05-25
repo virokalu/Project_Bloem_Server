@@ -47,6 +47,9 @@ const itemSchema = new Schema({
     imgthree:{
         type:String,
     },
+    district:{
+        type:String,
+    },
     activestatus:{
         type:Boolean,
         required:true,
