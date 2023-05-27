@@ -9,7 +9,7 @@ router.get('/',ItemController.findAll);
 router.get('/search',ItemController.findSearch);
 router.get('/:id',ItemController.findOne);
 router.put("/:id",ItemController.update);
-router.delete('/:id',ItemController.delete);
+//router.delete('/:id',ItemController.delete);
 router.post('/regbuyitem',ItemController.regBuyItem);
 
 

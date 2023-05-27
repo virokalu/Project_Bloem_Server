@@ -132,20 +132,20 @@ exports.update = async (req,res,next)=>{
     }
 }
 
-exports.delete = (req,res,next)=>{
-    var model = {
-        id: req.params.id,
-    };
+// exports.delete = (req,res,next)=>{
+//     var model = {
+//         id: req.params.id,
+//     };
 
-    ItemService.deleteItem(model,(error,results)=>{
-        if(error){
-            return next(error);
-        }else{
-            return res.status(200).json({ status:true,message: 'Success' });
-        }
-    })
+//     ItemService.deleteItem(model,(error,results)=>{
+//         if(error){
+//             return next(error);
+//         }else{
+//             return res.status(200).json({ status:true,message: 'Success' });
+//         }
+//     })
 
- }
+//  }
 
  exports.regBuyItem = async (req,res,next)=>{
     try {

@@ -35,7 +35,7 @@ exports.delete = (req,res,next)=>{
         id: req.body.item,
         qty: req.body.qty,
     };
-    console.log(model);
+    //console.log(model);
 
     cartService.removeCartItem(model,(error,results)=>{
         if(error){

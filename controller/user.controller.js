@@ -87,11 +87,11 @@ exports.update = async(req,res,next)=>{
             )
             const newuser = await UserService.checkuser(newusername);
 
-            res.status(200).json({status:true,username:newuser.username,fullname:newuser.fullname,email:newuser.email,sucess:"User Registered Successfully"});
+            res.status(200).json({status:true,username:newuser.username,fullname:newuser.fullname,email:newuser.email,district:newuser.district,success:"User Registered Successfully"});
 
             //console.log("User Registered Successfully");
         }else if(emailcheck){
-            res.status(200).json({status:false,exist:"email",sucess:"User Not Registered"});
+            res.status(200).json({status:false,exist:"email",success:"User Not Registered"});
             //console.log("User Not Registered email");
         }else if(userCheck){
             res.status(200).json({status:false,exist:"user",sucess:"User Not Registered"});
