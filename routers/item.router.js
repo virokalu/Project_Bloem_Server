@@ -11,6 +11,8 @@ router.get('/:id',ItemController.findOne);
 router.put("/:id",ItemController.update);
 //router.delete('/:id',ItemController.delete);
 router.post('/regbuyitem',ItemController.regBuyItem);
+router.get('/buyitems/:sellername',ItemController.SellerBuyItems);
+router.get('/allbuyitems/:sellername',ItemController.allBuyItems);
 
 
 router.post("/cart",cartController.create);
