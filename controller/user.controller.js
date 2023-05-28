@@ -105,7 +105,6 @@ exports.update = async(req,res,next)=>{
 
     }
 }
-
 exports.emailcheck = async(req,res,next)=>{
     try{
         const {email} = req.body;
@@ -122,6 +121,22 @@ exports.emailcheck = async(req,res,next)=>{
     } catch (err){
 
         throw err;
+
+    }
+}
+
+exports.getemail = async(req,res,next)=>{
+    const { username } = req.body;
+    try {
+        const user = await UserService.checkuser(username);
+        //console.log(user);
+        res.status(200).json({status:true,username:user.username,fullname:user.fullname,email:user.email});
+   
+        
+    } catch (error){
+
+        console.log(error);
+        return res.status(500).json({ message: 'Internal server error' });
 
     }
 }

@@ -16,6 +16,8 @@ router.put("/question",QuestionController.updateQuestion);
 router.post('/registration',UserController.register);
 router.post('/login',UserController.login);
 router.post('/email',UserController.emailcheck); //CheckEmailForVerification
+router.post('/getEmail',UserController.getemail);
+
 router.post('/password',UserController.updatepassword); //ResetYourPassword
 router.post('/update',UserController.update); //ResetYourInfo
 router.post('/resetpassword',UserController.resetpassword); //ResetYourPasswordInForget
