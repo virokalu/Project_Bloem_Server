@@ -1,4 +1,5 @@
-
+const regBuyItemModel = require('../model/reg.item.model');
+const regSellerModel = require('../model/sellerdetails.model');
 const ItemService = require('../services/item.services');
 
 
@@ -132,6 +133,38 @@ exports.update = async (req,res,next)=>{
     }
 }
 
+exports.SellerBuyItems = async(req,res)=>{
+    console.log("x");
+    const db = require("../config/db");
+    const collection = db.collection('regbuyitems');
+    collection.find({sellername : req.params.sellername}).toArray(function(err,regbuyitems){
+        if(err){
+            console.log("failed to retrived users from mongoDB",err);
+        }
+        else{
+            return res.status(200).json({regbuyitems});
+            // console.log(users);
+            // return users;
+        }
+    });
+}
+
+exports.allBuyItems = async(req,res)=>{
+    console.log("y");
+    const db = require("../config/db");
+    const collection = db.collection('regbuyitems');
+    collection.find({}).toArray(function(err,regbuyitems){
+        if(err){
+            console.log("failed to retrived users from mongoDB",err);
+        }
+        else{
+            console.log(regbuyitems);
+            return res.status(200).json({regbuyitems});
+            // return users;
+        }
+    });
+}
+
 // exports.delete = (req,res,next)=>{
 //     var model = {
 //         id: req.params.id,
@@ -149,26 +182,74 @@ exports.update = async (req,res,next)=>{
 
  exports.regBuyItem = async (req,res,next)=>{
     try {
+
+        let Total = 0;
+        let stid = " ";
+
+        regSellerModel.findOne({username : req.body.sellername},(err,data)=>{
+            if(err){
+                console.error(err);
+                return;
+            }else{
+                if(data){
+                    stid = data.publishable_key;
+                }
+            }
+        
+
+        regBuyItemModel.findOne({}, 'apps_Total_amount',{ sort: { _id: -1 } }, (err, data) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+          
+            if (data) {
+              Total = data.apps_Total_amount;
+
+                const limitAmount = 5000;
+                let appFee = 0;
+                let netPrice = req.body.itemprice;
+
+                if(Total >= limitAmount){
+                    appFee = req.body.itemprice*(5/100);
+                    Total += netPrice;
+                    netPrice = netPrice - appFee;
+                }else {
+                    Total = Total + netPrice;
+                }
+
+                var model ={
+                    street : req.body.street,
+                    town : req.body.town,
+                    postalCode : req.body.postalCode,
+                    sellername : req.body.sellername,
+                    buyername : req.body.buyername,
+                    itemid : req.body.itemid,
+                    itemprice : req.body.itemprice,
+                    app_fee : appFee,
+                    seller_amount : netPrice,
+                    apps_Total_amount : Total,
+                    stid : stid,
+                };
+                ItemService.insertBuyItem(model,(error,results)=>{
+                    if(error){
+                        return next(error);
+                    }else{
+                        return res.status(200).json({ status:true,message: 'Item successfully added' });
+                    }
+                })
+              console.log(Total);
+            } else {
+              console.log('No data found');
+            }
+          });
+        });
+          console.log(Total+0);
         //console.log(req);
         // const {username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus}=req.body;
         // const successRes = await ItemService.insertItem(username,category,commonname,sciname,price,description,cashondelivery,chatactivate,imgone,imgtwo,imgthree,activestatus);
-
-        var model ={
-            street : req.body.street,
-            town : req.body.town,
-            postalCode : req.body.postalCode,
-            sellername : req.body.sellername,
-            buyername : req.body.buyername,
-            itemid : req.body.itemid,
-            itemprice : req.body.itemprice
-        };
-        ItemService.insertBuyItem(model,(error,results)=>{
-            if(error){
-                return next(error);
-            }else{
-                return res.status(200).json({ status:true,message: 'Item successfully added' });
-            }
-        })
+        //let Total = 7000;
+        
         
     } catch (error) {
         console.log(error);

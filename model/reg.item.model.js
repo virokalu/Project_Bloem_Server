@@ -5,6 +5,8 @@ const { Schema } = mongoose;
 
 
 const regBuyItemSchema = new Schema({
+
+    //_id : false,
    
     street: {
         type : String,
@@ -31,8 +33,24 @@ const regBuyItemSchema = new Schema({
         required : true,
     },
     itemprice : {
+        type : Number,
+        required : true,
+    },
+    app_fee : {
+        type : Number,
+        //required : true,
+    },
+    seller_amount : {
+        type : Number,
+        //required : true,
+    },
+    apps_Total_amount : {
+        type : Number,
+        //required : true,
+    },
+    stid : {
         type : String,
-    }
+    },
 
 }
 // ,{
