@@ -24,8 +24,8 @@ router.post('/resetpassword',UserController.resetpassword); //ResetYourPasswordI
 router.get('/users',UserController.showusers);
 router.post('/message',MessageController.messages);//message routes
 router.post('/viewmessages',MessageController.displaymessages);
-router.get('/barchartdata',BarchartController.showbarchartData);
-router.post('/insertbarchartdata',BarchartController.insertBarChartData);
+router.get('/barchartdata/:sellername',BarchartController.showbarchartData);
+//router.post('/insertbarchartdata',BarchartController.insertBarChartData);
 router.post('/chatlistdata',ChatListController.showchatlistData);
 router.post('/insertchatlistdata',ChatListController.insertchatlistData);
 router.post('/insertcard',UserController.addCard);

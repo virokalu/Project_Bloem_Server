@@ -4,8 +4,8 @@ const db = require('../config/db');
 const { Schema } = mongoose;
 
 const barchartSchema = new Schema({
-    day : {type:  String},
-    sum : {type: Number},
+    category : {type:  String},
+    price : {type: Number},
     color : {type: String},
     //user_id : {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
     username: {type: String,required: true},

@@ -1,5 +1,6 @@
 const ItemModel = require("../model/item.model");
 const regBuyItemModel = require("../model/reg.item.model");
+const Barchart = require("../model/barchartmodel");
 
 
 // class ItemService{
@@ -35,6 +36,21 @@ async function insertBuyItem(params,callbacks){
         return callbacks(error);
     })
 }
+
+///////////////////////////////////////////////
+
+async function insertBarChartData(params,callbacks){
+    const barItem = new Barchart(params);
+    barItem.save()
+    .then((response)=>{
+        return callbacks(null,response);
+    })
+    .catch((error)=>{
+        return callbacks(error);
+    })
+}    
+
+///////////////////////////////////////////////
 async function getSearch(params,callback){
     const commonname = params.commonname;
     const activestatus = params.activestatus;
@@ -152,5 +168,6 @@ module.exports = {
     deleteItem,
     getItemById,
     insertBuyItem,
+    insertBarChartData,
     getSearch,
 };

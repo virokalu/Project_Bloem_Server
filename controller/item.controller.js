@@ -1,6 +1,7 @@
 const regBuyItemModel = require('../model/reg.item.model');
 const regSellerModel = require('../model/sellerdetails.model');
 const ItemService = require('../services/item.services');
+const BarChart = require('../model/barchartmodel');
 
 
 
@@ -230,6 +231,7 @@ exports.allBuyItems = async(req,res)=>{
                     seller_amount : netPrice,
                     apps_Total_amount : Total,
                     stid : stid,
+                    category : req.body.category,
                 };
                 ItemService.insertBuyItem(model,(error,results)=>{
                     if(error){
@@ -239,6 +241,50 @@ exports.allBuyItems = async(req,res)=>{
                     }
                 })
               console.log(Total);
+
+                /////////////////////////////////////////////////////
+
+                var color = " ";
+
+                if(req.body.category == "Cut Flowers"){
+                    color = "red";
+                }
+                else if(req.body.category == "Foliage Plants"){
+                    color = "pink";
+                }
+                else if(req.body.category == "Pot Plants"){
+                    color = "green";
+                }
+                else if(req.body.category == "Landscaping Plants"){
+                    color = "blue";
+                }
+                else if(req.body.category == "Bedded Plants"){
+                    color = "yellow";
+                }
+                else if(req.body.category == "Propagatory"){
+                    color = "orange";
+                }
+                else {
+                    color = "abc";
+                }
+
+                const barChartData = {
+                    category: req.body.category,
+                    price: req.body.itemprice,
+                    color: color,
+                    username: req.body.sellername,
+                  };
+                  ItemService.insertBarChartData(barChartData, (err) => {
+                    // if (err) {
+                    //   console.log(err);
+                    //   res.sendStatus(500);
+                    // } else {
+                    //   res.sendStatus(201);
+                    // }
+                  });
+
+                ////////////////////////////////////////////////////
+
             } else {
               console.log('No data found');
             }
