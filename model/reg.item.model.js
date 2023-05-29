@@ -51,6 +51,9 @@ const regBuyItemSchema = new Schema({
     stid : {
         type : String,
     },
+    category: {
+        type : String,
+    }
 
 }
 // ,{

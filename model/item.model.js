@@ -53,7 +53,7 @@ const itemSchema = new Schema({
     activestatus:{
         type:Boolean,
         required:true,
-    }
+    },
 
 }
 ,{

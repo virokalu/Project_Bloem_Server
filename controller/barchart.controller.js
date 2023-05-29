@@ -6,7 +6,7 @@ exports.showbarchartData = async(req,res)=>{
 
     const db = require("../config/db");
     const collection = db.collection('barcharts');
-    collection.find({}).toArray(function(err,bardata){
+    collection.find({username : req.params.sellername}).toArray(function(err,bardata){
         if(err){
             console.log("failed to retrived barchart data form mongoDB",err);
         }
@@ -19,20 +19,20 @@ exports.showbarchartData = async(req,res)=>{
     });
 }
 
-exports.insertBarChartData = async(req, res) => {
-    const bardata = new barchart({
-        day: req.body.day,
-        sum: req.body.sum,
-        color: req.body.color,
-        username: req.body.username,
-    })
+// exports.insertBarChartData = async(req, res) => {
+//     const bardata = new barchart({
+//         category: req.body.day,
+//         sum: req.body.sum,
+//         color: req.body.color,
+//         username: req.body.username,
+//     })
 
-    bardata.save((err) => {
-        if (err) {
-            console.log(err);
-            res.sendStatus(500);
-          } else {
-            res.sendStatus(201);
-          }
-    });
-}
+//     bardata.save((err) => {
+//         if (err) {
+//             console.log(err);
+//             res.sendStatus(500);
+//           } else {
+//             res.sendStatus(201);
+//           }
+//     });
+// }
