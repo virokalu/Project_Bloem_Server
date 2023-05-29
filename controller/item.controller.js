@@ -24,7 +24,8 @@ exports.addItem = async (req,res,next)=>{
             imgtwo:req.body.imgtwo,
             imgthree:req.body.imgthree,
             district:req.body.district,
-            activestatus:req.body.activestatus
+            activestatus:req.body.activestatus,
+            quantity:req.body.quantity
         }
         ItemService.insertItem(model,(error,results)=>{
             if(error){

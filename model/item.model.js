@@ -54,6 +54,10 @@ const itemSchema = new Schema({
         type:Boolean,
         required:true,
     },
+    quantity:{
+        type:String,
+        required:true,
+    }
 
 }
 ,{
