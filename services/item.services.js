@@ -38,12 +38,17 @@ async function insertBuyItem(params,callbacks){
 async function getSearch(params,callback){
     const commonname = params.commonname;
     const activestatus = params.activestatus;
+    const district = params.district;
     var condition ={};
 
     if(commonname){
         condition["commonname"] = {
             $regex: new RegExp(commonname), $options:"i"
         };
+        condition["activeStatus"] = activestatus;
+    }
+    if(district){
+        condition["district"] = district;
         condition["activeStatus"] = activestatus;
     }
 

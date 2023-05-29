@@ -66,6 +66,7 @@ exports.addItem = async (req,res,next)=>{
     var model = {
         activestatus:req.query.activestatus,
         commonname:req.query.commonname,
+        district:req.query.district,
     };
 
     ItemService.getSearch(model,(error,results)=>{
